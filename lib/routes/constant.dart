@@ -1,2 +1,3 @@
-const String home = 'home';
-const String popup = 'popup';
+const String initial = 'initial';
+const String unauthenticated = 'unauthenticated';
+const String authenticated = 'authenticated';

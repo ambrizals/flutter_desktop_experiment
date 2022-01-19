@@ -1,14 +1,27 @@
-import 'package:flutter_desktop_experiment/screen/dashboard_screen.dart';
 import 'package:flutter_desktop_experiment/services/locator.dart';
 import 'package:flutter_desktop_experiment/services/navigator.dart';
 import 'package:flutter/foundation.dart';
-
+import 'package:flutter_desktop_experiment/routes/constant.dart' as routes;
+import 'package:socket_io_client/socket_io_client.dart';
 class UnauthenticatedNotifier with ChangeNotifier {
   late NavigatorService _navigatorService;
   late bool isLoading;
   String? username, password;
 
   UnauthenticatedNotifier() {
+    Socket socket = io(
+        'http://localhost:3333',
+        OptionBuilder()
+            .setTransports(['websocket'])
+            .disableAutoConnect()
+            .build());
+    socket.connect();
+    socket.onConnect((_) {
+      print('connect');
+      socket.emit('notification', {'test': 'test'});
+    });
+    socket.on('news', (data) => print(data));
+
     _navigatorService = locator<NavigatorService>();
     isLoading = false;
   }
@@ -31,7 +44,7 @@ class UnauthenticatedNotifier with ChangeNotifier {
 
   Future<void> doLogin() async {
     if (checkUsername(username!) && checkPassword(password!)) {
-      _navigatorService.off(DashboardScreen());
+      _navigatorService.push(routes.authenticated);
     }
   }
 }

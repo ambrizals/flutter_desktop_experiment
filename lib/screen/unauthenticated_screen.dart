@@ -45,86 +45,83 @@ class _UnauthenticatedScreenState extends State<UnauthenticatedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => _notifier,
-      child: ScaffoldPage(
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.all(24),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const FlutterLogo(
-                  size: 156,
-                ),
-                const SizedBox(
-                  height: 36,
-                ),
-                Form(
-                  key: _formKey,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    child: ContentDialog(
-                      title: const Text('Login'),
-                      content: Wrap(
-                        runSpacing: 12,
-                        children: [
-                          TextFormBox(
-                            header: 'Username',
-                            placeholder: 'Masukkan username anda',
-                            onChanged: (value) => _notifier.username = value,
-                            validator: (value) {
-                              if (value == null) {
+    return ScaffoldPage(
+      content: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        padding: const EdgeInsets.all(24),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const FlutterLogo(
+                size: 156,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Form(
+                key: _formKey,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: ContentDialog(
+                    title: const Text('Login'),
+                    content: Wrap(
+                      runSpacing: 12,
+                      children: [
+                        TextFormBox(
+                          header: 'Username',
+                          placeholder: 'Masukkan username anda',
+                          onChanged: (value) => _notifier.username = value,
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Username tidak boleh kosong';
+                            } else {
+                              if (!_notifier.checkUsername(value)) {
+                                return 'Username yang anda masukkan salah';
+                              } else if (value.isEmpty) {
                                 return 'Username tidak boleh kosong';
-                              } else {
-                                if (!_notifier.checkUsername(value)) {
-                                  return 'Username yang anda masukkan salah';
-                                } else if (value.isEmpty) {
-                                  return 'Username tidak boleh kosong';
-                                }
                               }
-                              return null;
-                            },
-                          ),
-                          TextFormBox(
-                            header: 'Password',
-                            placeholder: 'Masukkan password anda',
-                            obscureText: true,
-                            onChanged: (value) => _notifier.password = value,
-                            validator: (value) {
-                              if (value == null) {
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormBox(
+                          header: 'Password',
+                          placeholder: 'Masukkan password anda',
+                          obscureText: true,
+                          onChanged: (value) => _notifier.password = value,
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Password tidak boleh kosong';
+                            } else {
+                              if (!_notifier.checkPassword(value)) {
+                                return 'Password yang anda masukkan salah !';
+                              } else if (value.isEmpty) {
                                 return 'Password tidak boleh kosong';
-                              } else {
-                                if (!_notifier.checkPassword(value)) {
-                                  return 'Password yang anda masukkan salah !';
-                                } else if (value.isEmpty) {
-                                  return 'Password tidak boleh kosong';
-                                }
                               }
-                              return null;
-                            },
-                          )
-                        ],
-                      ),
-                      actions: [
-                        Button(
-                            style: primaryButtonStyle(),
-                            child: const Text('Login'),
-                            onPressed: () => submit()),
-                        const Button(
-                            child: Text('Lupa Password'), onPressed: null),
-                        Button(
-                            child: const Text('Tutup Aplikasi'),
-                            onPressed: () => closeApp()),
-
+                            }
+                            return null;
+                          },
+                        )
                       ],
                     ),
+                    actions: [
+                      Button(
+                          style: primaryButtonStyle(),
+                          child: const Text('Login'),
+                          onPressed: () => submit()),
+                      const Button(
+                          child: Text('Lupa Password'), onPressed: null),
+                      Button(
+                          child: const Text('Tutup Aplikasi'),
+                          onPressed: () => closeApp()),
+
+                    ],
                   ),
                 ),
-              ]),
-        ),
+              ),
+            ]),
       ),
     );
   }

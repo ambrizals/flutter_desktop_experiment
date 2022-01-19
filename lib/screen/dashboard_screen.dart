@@ -29,13 +29,28 @@ class DashboardScreen extends StatelessWidget {
             actions: MoveWindow(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [Spacer(), WindowButtons()],
+                children: [
+                  const Spacer(),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 6, right: 6),
+                      child: Button(
+                          child: const Icon(FluentIcons.settings),
+                          onPressed: () {})),
+                  Padding(
+                      padding: const EdgeInsets.only(top: 6, right: 6),
+                      child: Button(
+                          child: const Icon(FluentIcons.action_center),
+                          onPressed: () {})),
+                  const SizedBox(width: 24),
+                  const WindowButtons()
+                ],
               ),
             ),
           ),
           pane: NavigationPane(
+              header: const Text('Menu'),
               selected: notifier.currentIndex,
-              displayMode: PaneDisplayMode.auto,
+              displayMode: PaneDisplayMode.compact,
               onChanged: (i) => notifier.setCurrentIndex(i),
               items: [
                 PaneItem(
@@ -44,6 +59,15 @@ class DashboardScreen extends StatelessWidget {
                 PaneItem(
                     icon: const Icon(FluentIcons.chat),
                     title: const Text('Chatting')),
+              ],
+              footerItems: [
+                PaneItem(
+                    icon: const Icon(FluentIcons.settings),
+                    title: const Text('Settings')),
+                PaneItem(
+                    icon: const Icon(FluentIcons.action_center),
+                    title: const Text('Action Center')),
+
               ]),
           content: NavigationBody(
             index: notifier.currentIndex,

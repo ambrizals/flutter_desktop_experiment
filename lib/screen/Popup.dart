@@ -22,19 +22,12 @@ class _PopupPageState extends State<PopupPage> {
           children: [
             ElevatedButton(
               child: Text('Tekan'),
-              onPressed: () => _navigatorService.showSnackbar(
-                  message: 'Mantap Pak EKo',
-                  title: 'judul',
-                  icon: Icons.notifications,
-                  dismissable: true),
+              onPressed: null,
             ),
             SizedBox(height: 12),
             ElevatedButton(
               child: Text('Tekan'),
-              onPressed: () => _navigatorService.showSnackbar(
-                message: 'Mantap Pak EKo',
-                title: 'judul',
-              ),
+              onPressed: null,
             )
           ],
         ),

@@ -6,6 +6,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldPage(
+      header: const PageHeader(
+        title: Text('Home'),
+        commandBar: Text('Command Bar'),
+      ),
       content: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,

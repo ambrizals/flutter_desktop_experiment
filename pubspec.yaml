@@ -40,6 +40,7 @@ dependencies:
   fluent_ui:
     git: https://github.com/bdlukaa/fluent_ui.git
   desktop_window: ^0.4.0
+  bitsdojo_window: ^0.1.1+1
 
 dev_dependencies:
   flutter_test:

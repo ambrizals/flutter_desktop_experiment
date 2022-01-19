@@ -31,7 +31,7 @@ class UnauthenticatedNotifier with ChangeNotifier {
 
   Future<void> doLogin() async {
     if (checkUsername(username!) && checkPassword(password!)) {
-      _navigatorService.to(const DashboardScreen());
+      _navigatorService.off(DashboardScreen());
     }
   }
 }

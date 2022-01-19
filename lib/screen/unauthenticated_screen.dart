@@ -1,8 +1,9 @@
 // ignore_for_file: avoid_print
 
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter_desktop_experiment/notifier/authentication/unauthenticated_notifier.dart';
 import 'package:flutter_desktop_experiment/styles/button_style.dart';
-import 'package:desktop_window/desktop_window.dart';
+// import 'package:desktop_window/desktop_window.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 
@@ -20,12 +21,18 @@ class _UnauthenticatedScreenState extends State<UnauthenticatedScreen> {
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
-    DesktopWindow.resetMaxWindowSize().then((value) {
-      DesktopWindow.setWindowSize(const Size(1024, 700));
-      DesktopWindow.setMinWindowSize(const Size(1024, 700));
+    doWhenWindowReady(() {
+      var initializeSize = const Size(1024, 700);
+      appWindow.minSize = initializeSize;
+      appWindow.size = initializeSize;
+      appWindow.alignment = Alignment.center;      
     });
 
     super.initState();
+  }
+
+  void closeApp() {
+    appWindow.close();
   }
 
   void submit() {
@@ -106,13 +113,12 @@ class _UnauthenticatedScreenState extends State<UnauthenticatedScreen> {
                             style: primaryButtonStyle(),
                             child: const Text('Login'),
                             onPressed: () => submit()),
-                        Button(
-                            child: const Text('Reset'),
-                            onPressed: () {
-                              print('siap');
-                            }),
                         const Button(
                             child: Text('Lupa Password'), onPressed: null),
+                        Button(
+                            child: const Text('Tutup Aplikasi'),
+                            onPressed: () => closeApp()),
+
                       ],
                     ),
                   ),

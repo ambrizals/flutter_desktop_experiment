@@ -1,9 +1,10 @@
 // import 'package:flutter_desktop_experiment/routes/route.dart';
 // import 'package:flutter_desktop_experiment/routes/constant.dart' as route;
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter_desktop_experiment/initialize.dart';
 // import 'package:flutter_desktop_experiment/notifier/initialize_notifier.dart';
 import 'package:flutter_desktop_experiment/services/locator.dart';
-import 'package:desktop_window/desktop_window.dart';
+// import 'package:desktop_window/desktop_window.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_desktop_experiment/services/navigator.dart';
 // import 'package:provider/provider.dart';
@@ -11,7 +12,12 @@ import 'package:flutter_desktop_experiment/services/navigator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DesktopWindow.setMaxWindowSize(const Size(500, 500));
+  doWhenWindowReady(() {
+    var initializeSize = const Size(500, 500);
+    appWindow.minSize = initializeSize;
+    appWindow.size = initializeSize;
+    appWindow.alignment = Alignment.center;
+  });
   setupLocator();
   runApp(const MainApp());
 }

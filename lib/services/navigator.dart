@@ -26,11 +26,19 @@ class NavigatorService {
     return navigator;
   }
 
+  void removeNavigator(String key) {
+    _navigators.removeWhere((item) => item.key == key);
+  }
+
   // GlobalKey<NavigatorState> navigatorKey  = GlobalKey<NavigatorState>();
 
   // BuildContext get _currentContext {
   //   return navigatorKey.currentState!.overlay!.context;
   // }
+
+  bool isPushed(String origin) {
+    return navigator(origin).navigatorKey.currentState!.canPop();
+  }
 
   void back(String origin) {
     return navigator(origin).navigatorKey.currentState!.pop();

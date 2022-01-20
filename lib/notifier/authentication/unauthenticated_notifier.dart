@@ -44,7 +44,7 @@ class UnauthenticatedNotifier with ChangeNotifier {
 
   Future<void> doLogin() async {
     if (checkUsername(username!) && checkPassword(password!)) {
-      _navigatorService.push(routes.authenticated);
+      _navigatorService.push('main', routes.authenticated);
     }
   }
 }

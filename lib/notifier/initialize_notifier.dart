@@ -19,6 +19,6 @@ class InitializeNotifier with ChangeNotifier {
   Future<void> checkAuthentication() async {
     // future delay
     await Future.delayed(const Duration(seconds: 5));
-    _navigatorService.pushReplace(routes.unauthenticated);
+    _navigatorService.pushReplace('main', routes.unauthenticated);
   }
 }

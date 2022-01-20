@@ -1,13 +1,39 @@
 import 'package:fluent_ui/fluent_ui.dart';
-class NavigatorService {
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  BuildContext get _currentContext {
-    return navigatorKey.currentState!.overlay!.context;
+class NavigatorMap {
+  final String key;
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  NavigatorMap(
+    this.key,
+    this.navigatorKey,
+  );
+}
+
+class NavigatorService {
+  // Map<String, GlobalKey<NavigatorState>>
+  final List<NavigatorMap> _navigators =
+      List<NavigatorMap>.empty(growable: true);
+
+  NavigatorMap navigator(String key) {
+    return _navigators.firstWhere((navigator) => navigator.key == key);
   }
 
-  void back() {
-    return navigatorKey.currentState!.pop();
+  NavigatorMap addNavigator(String key) {
+    final navigatorKey = GlobalKey<NavigatorState>();
+    final navigator = NavigatorMap(key, navigatorKey);
+    _navigators.add(navigator);
+    return navigator;
+  }
+
+  // GlobalKey<NavigatorState> navigatorKey  = GlobalKey<NavigatorState>();
+
+  // BuildContext get _currentContext {
+  //   return navigatorKey.currentState!.overlay!.context;
+  // }
+
+  void back(String origin) {
+    return navigator(origin).navigatorKey.currentState!.pop();
   }
 
   // Future<dynamic> to(Widget screen) {
@@ -18,13 +44,18 @@ class NavigatorService {
   //   return navigatorKey.currentState!.pushReplacement(MaterialPageRoute(builder: (context) => screen));
   // }
 
-  Future<dynamic> push(String routeName, {dynamic arguments}) {
-    return navigatorKey.currentState!
+  Future<dynamic> push(String origin, String routeName, {dynamic arguments}) {
+    return navigator(origin)
+        .navigatorKey
+        .currentState!
         .pushNamed(routeName, arguments: arguments);
   }
 
-  Future<dynamic> pushReplace(String routeName, {dynamic arguments}) {
-    return navigatorKey.currentState!
+  Future<dynamic> pushReplace(String origin, String routeName,
+      {dynamic arguments}) {
+    return navigator(origin)
+        .navigatorKey
+        .currentState!
         .pushReplacementNamed(routeName, arguments: arguments);
   }
 

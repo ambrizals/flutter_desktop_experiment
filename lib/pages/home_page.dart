@@ -1,21 +1,26 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_desktop_experiment/screen/not_found_screen.dart';
+import 'package:flutter_desktop_experiment/services/locator.dart';
+import 'package:flutter_desktop_experiment/services/navigator.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final NavigatorMap _navigatorMap =
+      locator<NavigatorService>().addNavigator('home');
+  HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldPage(
-      header: const PageHeader(
-        title: Text('Home'),
-        commandBar: Text('Command Bar'),
-      ),
-      content: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: Colors.white,
-        child: const Text('Ok'),
-      ),
+    return Navigator(
+      key: _navigatorMap.navigatorKey,
+      initialRoute: '/',
+      onGenerateRoute: _generateRoute,
     );
+  }
+}
+
+Route<dynamic> _generateRoute(RouteSettings settings) {
+  switch (settings.name) {
+    default:
+      return FluentPageRoute(builder: (_) => const NotFoundScreen());
   }
 }

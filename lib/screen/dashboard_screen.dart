@@ -71,9 +71,9 @@ class DashboardScreen extends StatelessWidget {
               ]),
           content: NavigationBody(
             index: notifier.currentIndex,
-            children: const [
+            children: [
               HomePage(),
-              ChatPage(),
+              const ChatPage(),
             ],
           ),
         ),

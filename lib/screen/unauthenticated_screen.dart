@@ -103,6 +103,7 @@ class _UnauthenticatedScreenState extends State<UnauthenticatedScreen> {
                             }
                             return null;
                           },
+                          onEditingComplete: () => submit(),
                         )
                       ],
                     ),

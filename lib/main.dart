@@ -14,16 +14,19 @@ void main() async {
     appWindow.alignment = Alignment.center;
   });
   setupLocator();
-  runApp(const MainApp());
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({Key? key}) : super(key: key);
+  final NavigatorMap _navigatorMap =
+      locator<NavigatorService>().addNavigator('main');
+
+  MainApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FluentApp(
-      navigatorKey: locator<NavigatorService>().navigatorKey,
+      navigatorKey: _navigatorMap.navigatorKey,
       initialRoute: routes.initial,
       onGenerateRoute: generateRoute,
     );

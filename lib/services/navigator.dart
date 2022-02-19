@@ -36,6 +36,10 @@ class NavigatorService {
   //   return navigatorKey.currentState!.overlay!.context;
   // }
 
+  // BuildContext _currentContext(String key) {
+  //   return navigator(key).navigatorKey.currentState!.overlay!.context;
+  // }
+
   bool isPushed(String origin) {
     return navigator(origin).navigatorKey.currentState!.canPop();
   }
@@ -66,6 +70,10 @@ class NavigatorService {
         .currentState!
         .pushReplacementNamed(routeName, arguments: arguments);
   }
+
+  // void openSnackbar(String origin, {required String content}) {
+  //   showSnackbar(coba, Snackbar(content: Text(content)));
+  // }
 
   // void showSnackbar(
   //     {required String message,

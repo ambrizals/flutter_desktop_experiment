@@ -30,8 +30,15 @@ class UnauthenticatedNotifier with ChangeNotifier {
   }
 
   Future<void> doLogin() async {
+    isLoading = true;
+    notifyListeners();
+    await Future.delayed(const Duration(seconds: 3));
+
     if (checkUsername(username!) && checkPassword(password!)) {
       _navigatorService.to(const DashboardScreen());
     }
+
+    isLoading = false;
+    notifyListeners();
   }
 }

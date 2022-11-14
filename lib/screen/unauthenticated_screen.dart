@@ -30,6 +30,7 @@ class _UnauthenticatedScreenState extends State<UnauthenticatedScreen> {
 
   void submit() {
     if (_formKey.currentState!.validate()) {
+      print('log proses login');
       _notifier.doLogin();
     } else {
       print('something happen !');
@@ -71,12 +72,6 @@ class _UnauthenticatedScreenState extends State<UnauthenticatedScreen> {
                             validator: (value) {
                               if (value == null) {
                                 return 'Username tidak boleh kosong';
-                              } else {
-                                if (!_notifier.checkUsername(value)) {
-                                  return 'Username yang anda masukkan salah';
-                                } else if (value.isEmpty) {
-                                  return 'Username tidak boleh kosong';
-                                }
                               }
                               return null;
                             },
@@ -89,12 +84,6 @@ class _UnauthenticatedScreenState extends State<UnauthenticatedScreen> {
                             validator: (value) {
                               if (value == null) {
                                 return 'Password tidak boleh kosong';
-                              } else {
-                                if (!_notifier.checkPassword(value)) {
-                                  return 'Password yang anda masukkan salah !';
-                                } else if (value.isEmpty) {
-                                  return 'Password tidak boleh kosong';
-                                }
                               }
                               return null;
                             },
@@ -102,10 +91,12 @@ class _UnauthenticatedScreenState extends State<UnauthenticatedScreen> {
                         ],
                       ),
                       actions: [
-                        Button(
-                            style: primaryButtonStyle(),
-                            child: const Text('Login'),
-                            onPressed: () => submit()),
+                        Consumer<UnauthenticatedNotifier>(
+                          builder: (_, c, __) => Button(
+                              style: primaryButtonStyle(),
+                              child: const Text('Login'),
+                              onPressed: c.isLoading ? null : () => submit()),
+                        ),
                         Button(
                             child: const Text('Reset'),
                             onPressed: () {
